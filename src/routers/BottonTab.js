@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
-import Feed from "../pages/Feed";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+import Home from "../pages/home/Home";
 import Notification from "../pages/Notification";
 import Settings from "../pages/Settings";
 
@@ -16,9 +17,9 @@ function TabGroup(){
                 tabBarShowLabel: false
             })}
         >
-            <Tab.Screen name="Feed" component={Feed}
+            <Tab.Screen name="Home" component={Home}
             options={{
-                tabBarIcon: ({focused}) => (<Entypo name="home" size={24} color={focused? '#0FB455':'#8B8C8B'} />)
+                tabBarIcon: ({focused}) => (<Entypo name="home" size={24} color={focused? '#0FB455':'#8B8C8B'} />),
             }}
             />
             <Tab.Screen name="Notification" component={Notification}
