@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
-import { Text, View, Image, StyleSheet } from "react-native";
+import { Text, View, Image, StyleSheet, Pressable } from "react-native";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
+import { getTypeColor } from "../../../helpers/stylePokemon";
 
 
 export default function PokemonCard({url}){
     const [pokemon, setPokemon] = useState(null);
+    const { navigate } = useNavigation();
 
-
+    
+    const showDetailsPokemon = () => {
+        if( pokemon ){
+            navigate( 'PokemonDetails', {pokemon} );
+        }
+    }
     useEffect(() => {
         const fetchPokemons = async () => {
             try {
@@ -20,36 +28,41 @@ export default function PokemonCard({url}){
         fetchPokemons();
     }, [])
     return(
-        <View style={style.container} >
+        <Pressable 
+        style={{...style.container, 
+            backgroundColor:`${(pokemon)?(getTypeColor(pokemon.types[0].type.name)):'light'}`}} 
+        onPress={showDetailsPokemon} 
+        >
             {pokemon?
             <>
                 <Image
                 style={style.image}
                 source={{uri: pokemon.sprites.front_default }}
                 />
-                <Text style={style.text} > { pokemon.name.toUpperCase() } </Text>
+                <Text style={style.text} > { pokemon.name.toUpperCase() } - { pokemon.types[0].type.name } </Text>
             </>
                 :
             <Text> Loading... </Text>
             }
-        </View>
+        </Pressable>
     );
 }
 
 const style = StyleSheet.create({
     container:{
-        flexDirection: 'row',
+        flex: 1,
+        margin: 10,
+        flexDirection: 'column',
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: '#8B8C8B',
         borderRadius: 10,
-        marginBottom: 10
+        marginBottom: 10,
     },
     image:{
         width: 100,
         height: 100
     },
     text:{
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        color:'white'
     }
 });

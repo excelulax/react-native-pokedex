@@ -31,9 +31,10 @@ export default function Home(){
     }, []);
 
     return(
-        <SafeAreaView style={style.container}>  
+        <SafeAreaView>  
             <FlatList
             data={pokemons}
+            numColumns={2}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => ( <PokemonCard url={item.url} /> )}
             onEndReached={() => {loadPokemons(nextPokemons)}}
@@ -45,5 +46,5 @@ export default function Home(){
 const style = StyleSheet.create({
     container: {
         padding: 20
-    }
+    },
 });

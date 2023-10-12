@@ -7,8 +7,22 @@ import Settings from "../pages/Settings";
 
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { PokemonDetails } from "../pages/home/components/PokemonDetails";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+function StackHome() {
+    return(
+        <Stack.Navigator>
+            <Stack.Screen name='Main' component={Home}
+            options={{headerShown: false}}
+            />
+            <Stack.Screen name='PokemonDetails' component={PokemonDetails} />
+        </Stack.Navigator>
+    );
+}
 
 function TabGroup(){
     return(
@@ -17,7 +31,7 @@ function TabGroup(){
                 tabBarShowLabel: false
             })}
         >
-            <Tab.Screen name="Home" component={Home}
+            <Tab.Screen name="Home" component={StackHome}
             options={{
                 tabBarIcon: ({focused}) => (<Entypo name="home" size={24} color={focused? '#0FB455':'#8B8C8B'} />),
             }}
