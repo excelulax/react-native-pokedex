@@ -31,7 +31,8 @@ export default function Home(){
     }, []);
 
     return(
-        <SafeAreaView>  
+        <SafeAreaView> 
+            <Searcher/>
             <FlatList
             data={pokemons}
             numColumns={2}

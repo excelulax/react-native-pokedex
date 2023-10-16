@@ -1,15 +1,28 @@
 import { useEffect, useState } from "react";
-import { TextInput, StyleSheet, View, Text, FlatList } from "react-native";
+import { TextInput, StyleSheet, View, FlatList, Pressable, Text } from "react-native";
 import axios from "axios";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 
 export default function Searcher(){
+    const { navigate } = useNavigation();
+
     const [search, setSearch] = useState('');
     const [pokemonNames, setPokemonNames] = useState([]);
+    const [showPokemonNames, setShowPokemonNames] = useState([]);
     
-    const showPokemonNames = pokemonNames.map(p => p.includes(search));
 
-
+    const filterPokemons = (t) => {
+        if(t === ''){
+            setSearch(t);
+            setShowPokemonNames([]);
+        }else{
+            const newShowPokemonNames = pokemonNames.filter(p => p.includes(t));
+            setSearch(t);
+            setShowPokemonNames(newShowPokemonNames.slice(0,5));
+        }
+    }
 
     useEffect(() => {
         const fetchPokemonNames = async () => {
@@ -26,32 +39,52 @@ export default function Searcher(){
     }, [])
     
     return(
-        <View>
+        <View style={styles.container } >
             <TextInput
             style={styles.textInput}
             placeholder="Buscar..."
-            onChangeText={(t) =>{ setSearch(t) }}
+            onChangeText={filterPokemons}
             value={search}
             />
 
-        <FlatList
-            // style={styles.flatList}
-            data={showPokemonNames}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-            <Text>{item}</Text>
-            )}
-        />
+            <FlatList
+                style={styles.flatList}
+                data={showPokemonNames}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+                    <Text 
+                    style={styles.text}
+                    onPress={() => { navigate( 'PokemonDetails', {name: item} ); }} 
+                    > 
+                        { item } 
+                    </Text>
+                )}
+            />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        paddingTop: 10,
+        paddingLeft: 10
     },
     flatList:{
         flex: 0.2,
+        position: 'absolute',
+        backgroundColor: 'white',
+        zIndex: 1000,
+        top: 40,
+        left: 20,
+        borderRadius: 10,
+        paddingHorizontal: 20,
+
+        elevation: 10,
+    },
+    text:{
+        borderBottomWidth: 1,
+        borderColor:'#E7E7E7',
+        paddingVertical: 5
     },
     textInput: {
         width: 200,

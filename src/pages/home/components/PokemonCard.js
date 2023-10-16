@@ -12,7 +12,7 @@ export default function PokemonCard({url}){
     
     const showDetailsPokemon = () => {
         if( pokemon ){
-            navigate( 'PokemonDetails', {pokemon} );
+            navigate( 'PokemonDetails', {name: pokemon.name} );
         }
     }
     useEffect(() => {
