@@ -2,7 +2,7 @@ import BottonTab from './src/routers/BottonTab';
 
 export default function App() {
   return (
-    <BottonTab/>
+    <BottonTab/>gay
   );
 }
 
