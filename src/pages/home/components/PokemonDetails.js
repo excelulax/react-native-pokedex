@@ -6,6 +6,15 @@ export const PokemonDetails = () => {
   return (
     <View>
         <Text>{name}</Text>
+        <Text>{name}</Text>
+        <Text>{name}</Text>
+        <Text>{name}</Text>
+        <Text>{name}</Text>
+        <Text>{name}</Text>
+        <Text>{name}</Text>
+        <Text>{name}</Text>
+        <Text>{name}</Text>
+        <Text>{name}</Text>
     </View>
   )
 }
